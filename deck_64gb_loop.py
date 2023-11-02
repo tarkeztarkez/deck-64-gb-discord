@@ -1,9 +1,11 @@
 from time import sleep
 from typing import NoReturn
 from urllib.request import urlopen
+from discord_webhook import DiscordWebhook
+
 
 # Set this
-ntfy_url = "https://ntfy.sh/YOUR_NTFY_URL"
+webhook_url = ""
 
 # Default value should be OK
 checking_frequency_in_seconds = 20
@@ -37,9 +39,9 @@ def is_available(id: str) -> bool:
 def notify(name: str) -> None:
     message = f"Version {name} is now available!"
     print()
-    print(message)
-    with urlopen(ntfy_url, data=str.encode(message), timeout=timeout):
-        pass
+    webhook = DiscordWebhook(url=webhook_url, content=message)
+    response = webhook.execute()
+
 
 
 def flush_print(text: str) -> None:
